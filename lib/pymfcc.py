@@ -15,7 +15,7 @@
 # OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 
-import math
+import math, numpy
 
 # Convert hertz to mel
 def mel(f):
@@ -26,3 +26,18 @@ def mel(f):
 def imel(m):
     # source: http://en.wikipedia.org/wiki/Mel_scale
     return 700.0 * (math.e**(m/1127.01048) - 1)
+
+# Extract frames from a discrete signal
+def window(signal, frameRate, windowSize):
+    """Extract frames from a discrete signal"""
+    if signal.ndim != 2:
+        raise TypeError, "signal must be a 2-dimensional array"
+    if signal.shape[1] != 1:
+        raise TypeError, "signal must have one column"
+    frames = None
+    for n in range(0,(signal.shape[0]-windowSize)+1,frameRate):
+        if frames == None:
+            frames = signal[n:n+windowSize]
+        else:
+            frames = numpy.hstack((frames, signal[n:n+windowSize]))
+    return frames
