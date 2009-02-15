@@ -15,17 +15,17 @@
 # OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 
-import math, numpy
+import numpy
 
-# Convert hertz to mel
 def mel(f):
+    """Convert hertz to mel"""
     # source: http://en.wikipedia.org/wiki/Mel_scale
-    return 1127.01048 * math.log(1 + f/700.0)
+    return 1127.01048 * numpy.log(1 + f/700.0)
 
-# Convert mel to hertz
 def imel(m):
+    """Convert mel to hertz"""
     # source: http://en.wikipedia.org/wiki/Mel_scale
-    return 700.0 * (math.e**(m/1127.01048) - 1)
+    return 700.0 * (numpy.e**(m/1127.01048) - 1)
 
 # Extract frames from a discrete signal
 def window(signal, frameRate, windowSize):
